@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosophy Quotes</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .quote-box {
+            margin-bottom: 30px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .quote-text {
+            font-size: 24px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            transition: opacity 0.5s ease;
+        }
+        
+        .quote-author {
+            font-style: italic;
+            font-size: 18px;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            transition: opacity 0.5s ease;
+        }
+        
+        .new-quote-btn {
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .new-quote-btn:hover {
+            background-color: #6488c1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .fade {
+            opacity: 0;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .quote-text {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quote-box">
+            <p id="quote" class="quote-text"></p>
+            <p id="author" class="quote-author"></p>
+        </div>
+        <button id="newQuote" class="new-quote-btn">New Quote</button>
+    </div>
+
+    <script>
+        // Collection of philosophical quotes
+        const quotes = [
+            {
+                text: "The unexamined life is not worth living.",
+                author: "Socrates"
+            },
+            {
+                text: "Happiness is not an ideal of reason but of imagination.",
+                author: "Immanuel Kant"
+            },
+            {
+                text: "One cannot step twice in the same river.",
+                author: "Heraclitus"
+            },
+            {
+                text: "To be is to be perceived.",
+                author: "George Berkeley"
+            },
+            {
+                text: "Man is condemned to be free.",
+                author: "Jean-Paul Sartre"
+            },
+            {
+                text: "God is dead! He remains dead! And we have killed him.",
+                author: "Friedrich Nietzsche"
+            },
+            {
+                text: "I think therefore I am.",
+                author: "René Descartes"
+            },
+            {
+                text: "The life of man is solitary, poor, nasty, brutish, and short.",
+                author: "Thomas Hobbes"
+            },
+            {
+                text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+                author: "Aristotle"
+            },
+            {
+                text: "There is only one good, knowledge, and one evil, ignorance.",
+                author: "Socrates"
+            },
+            {
+                text: "Entities should not be multiplied without necessity.",
+                author: "William of Ockham"
+            },
+            {
+                text: "He who has a why to live can bear almost any how.",
+                author: "Friedrich Nietzsche"
+            },
+            {
+                text: "We live in the best of all possible worlds.",
+                author: "Gottfried Wilhelm Leibniz"
+            },
+            {
+                text: "The function of prayer is not to influence God, but rather to change the nature of the one who prays.",
+                author: "Søren Kierkegaard"
+            },
+            {
+                text: "Freedom is what you do with what's been done to you.",
+                author: "Jean-Paul Sartre"
+            },
+            {
+                text: "The greatest happiness of the greatest number is the foundation of morals and legislation.",
+                author: "Jeremy Bentham"
+            },
+            {
+                text: "The owl of Minerva spreads its wings only with the falling of the dusk.",
+                author: "G.W.F. Hegel"
+            },
+            {
+                text: "Man is born free, and everywhere he is in chains.",
+                author: "Jean-Jacques Rousseau"
+            },
+            {
+                text: "Things which matter most must never be at the mercy of things which matter least.",
+                author: "Johann Wolfgang von Goethe"
+            },
+            {
+                text: "Beauty is truth, truth beauty, — that is all ye know on earth, and all ye need to know.",
+                author: "John Keats"
+            },
+            {
+                text: "Whereof one cannot speak, thereof one must be silent.",
+                author: "Ludwig Wittgenstein"
+            },
+            {
+                text: "Life must be understood backward. But it must be lived forward.",
+                author: "Søren Kierkegaard"
+            },
+            {
+                text: "To do as one would be done by, and to love one's neighbor as oneself, constitute the ideal perfection of utilitarian morality.",
+                author: "John Stuart Mill"
+            },
+            {
+                text: "I can control my passions and emotions if I can understand their nature.",
+                author: "Baruch Spinoza"
+            },
+            {
+                text: "The mind is furnished with ideas by experience alone.",
+                author: "John Locke"
+            },
+            {
+                text: "All that is necessary for the triumph of evil is that good men do nothing.",
+                author: "Edmund Burke"
+            },
+            {
+                text: "Happiness is the meaning and purpose of life, the whole aim and end of human existence.",
+                author: "Aristotle"
+            },
+            {
+                text: "The only thing I know is that I know nothing.",
+                author: "Socrates"
+            },
+            {
+                text: "It is not wisdom but authority that makes a law.",
+                author: "Thomas Hobbes"
+            },
+            {
+                text: "What is rational is actual and what is actual is rational.",
+                author: "G.W.F. Hegel"
+            },
+            {
+                text: "Science is organized knowledge. Wisdom is organized life.",
+                author: "Immanuel Kant"
+            },
+            {
+                text: "There is but one truly serious philosophical problem, and that is suicide.",
+                author: "Albert Camus"
+            },
+            {
+                text: "The price of greatness is responsibility.",
+                author: "Winston Churchill"
+            },
+            {
+                text: "Even while they teach, men learn.",
+                author: "Seneca the Younger"
+            },
+            {
+                text: "Virtue is nothing else than right reason.",
+                author: "Seneca the Younger"
+            },
+            {
+                text: "The brave man is he who overcomes not only his enemies but his pleasures.",
+                author: "Democritus"
+            },
+            {
+                text: "Pleasure in the job puts perfection in the work.",
+                author: "Aristotle"
+            },
+            {
+                text: "Only the educated are free.",
+                author: "Epictetus"
+            },
+            {
+                text: "The difficulty is not so great to die for a friend, as to find a friend worth dying for.",
+                author: "Homer"
+            },
+            {
+                text: "The secret of happiness, you see, is not found in seeking more, but in developing the capacity to enjoy less.",
+                author: "Socrates"
+            },
+            {
+                text: "Wonder is the feeling of the philosopher, and philosophy begins in wonder.",
+                author: "Plato"
+            },
+            {
+                text: "Morality is not the doctrine of how we may make ourselves happy, but of how we may make ourselves worthy of happiness.",
+                author: "Immanuel Kant"
+            },
+            {
+                text: "The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion.",
+                author: "Albert Camus"
+            },
+            {
+                text: "The aim of art is to represent not the outward appearance of things, but their inward significance.",
+                author: "Aristotle"
+            },
+            {
+                text: "The only true wisdom is in knowing you know nothing.",
+                author: "Socrates"
+            },
+            {
+                text: "Philosophy is written in that great book which ever lies before our eyes — I mean the universe.",
+                author: "Galileo Galilei"
+            },
+            {
+                text: "There are no facts, only interpretations.",
+                author: "Friedrich Nietzsche"
+            },
+            {
+                text: "We are not rich by what we possess but by what we can do without.",
+                author: "Immanuel Kant"
+            },
+            {
+                text: "All is flux, nothing stays still.",
+                author: "Heraclitus"
+            },
+            {
+                text: "Time is the moving image of eternity.",
+                author: "Plato"
+            },
+            {
+                text: "No man's knowledge here can go beyond his experience.",
+                author: "John Locke"
+            },
+            {
+                text: "The goal of life is living in agreement with nature.",
+                author: "Zeno of Citium"
+            },
+            {
+                text: "We do not inherit the earth from our ancestors; we borrow it from our children.",
+                author: "Native American Proverb"
+            },
+            {
+                text: "The beginning of wisdom is the definition of terms.",
+                author: "Socrates"
+            },
+            {
+                text: "You must be the change you wish to see in the world.",
+                author: "Mahatma Gandhi"
+            },
+            {
+                text: "The greatest wealth is to live content with little.",
+                author: "Plato"
+            }
+        ];
+
+        // DOM elements
+        const quoteElement = document.getElementById('quote');
+        const authorElement = document.getElementById('author');
+        const newQuoteButton = document.getElementById('newQuote');
+        
+        // Keep track of shown quotes to avoid repetition
+        let shownQuotes = [];
+        
+        // Function to display a new quote
+        function displayNewQuote() {
+            // Fade out current quote
+            quoteElement.classList.add('fade');
+            authorElement.classList.add('fade');
+            
+            setTimeout(() => {
+                // If all quotes have been shown, reset the list
+                if (shownQuotes.length === quotes.length) {
+                    shownQuotes = [];
+                }
+                
+                // Get a random quote that hasn't been shown yet
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * quotes.length);
+                } while (shownQuotes.includes(randomIndex));
+                
+                // Add this quote to shown quotes
+                shownQuotes.push(randomIndex);
+                
+                // Display the quote
+                quoteElement.textContent = `"${quotes[randomIndex].text}"`;
+                authorElement.textContent = quotes[randomIndex].author;
+                
+                // Fade in new quote
+                quoteElement.classList.remove('fade');
+                authorElement.classList.remove('fade');
+            }, 500);
+        }
+        
+        // Display initial quote when page loads
+        displayNewQuote();
+        
+        // Event listener for new quote button
+        newQuoteButton.addEventListener('click', displayNewQuote);
+    </script>
+</body>
+</html>
